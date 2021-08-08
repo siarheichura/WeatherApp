@@ -1,0 +1,62 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Georama', sans-serif;
+}
+
+.wrapper {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url(img/background.jpg) no-repeat center center;
+    background-size: cover;
+}
+
+.weather {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(230, 210, 210);
+    border-radius: 15px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.weather__city-select {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: none;
+    border-radius: 5px;
+}
+
+.weather__city {
+    font-size: 50px;
+}
+
+.weather__temperature {
+    font-size: 65px;
+    font-weight: 500;
+}
+
+.weather__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.weather__icon {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+}
