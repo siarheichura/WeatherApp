@@ -14,9 +14,13 @@
 <body>
     <div class="wrapper">
         <div class="weather">
-            <select class="weather__city-select"></select>
-            <h1 class="weather__city"></h1>
-            <img class="weather__icon" src="" alt="">
+            <select class="weather__city-select">
+                <option value="Select city" disabled selected>Select city</option>
+            </select>
+            <div class="weather__city-wrap">
+                <h1 class="weather__city"></h1>
+                <img class="weather__icon" src="" alt="">
+            </div>
             <p class="weather__status"></p>
             <p class="weather__temperature"></p> 
             <div class="weather__info">
