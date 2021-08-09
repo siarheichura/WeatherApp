@@ -18,7 +18,7 @@ citySelect.addEventListener('change', event => {
 })
 
 async function showMeWeather(cityName) {
-    let response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=b5a03b378e49085452cb14ec5350c1e9`)
+    let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=b5a03b378e49085452cb14ec5350c1e9`)
     let weatherDB = await response.json()
 
     city.innerText = weatherDB.name
@@ -26,7 +26,7 @@ async function showMeWeather(cityName) {
     weatherStatus.innerText = weatherDB.weather[0].description
     feelsLike.innerText = `Feels like: ${convertCalvinToCelsius(weatherDB.main.feels_like)}`
     windSpeed.innerText = `Wind speed: ${weatherDB.wind.speed}m/s`
-    icon.src = `http://openweathermap.org/img/wn/${weatherDB.weather[0].icon}@2x.png`
+    icon.src = `https://openweathermap.org/img/wn/${weatherDB.weather[0].icon}@2x.png`
 }
 
 // Push cities from array 'cities' to dropdown
