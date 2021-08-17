@@ -7,25 +7,44 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Georama:wght@400;500&display=swap" rel="stylesheet">
-    <script src="index.js" defer></script>
+    <script src="./index.js" type="module" defer></script>
     <link rel="stylesheet" href="style.css">
     <title>Belarus Current weather</title>
 </head>
 <body>
     <div class="wrapper">
-        <div class="weather">
-            <select class="weather__city-select">
+        <div class="card">
+            <select class="card__city-select">
                 <option value="Select city" disabled selected>Select city</option>
             </select>
-            <div class="weather__city-wrap">
-                <h1 class="weather__city"></h1>
-                <img class="weather__icon" src="" alt="">
+
+            <div class="card__heading">
+                <div class="card__city"></div>
+                <div class="card__clock">
+                    <div class="clock-text">Current time</div>
+                    <div class="clock">
+                        <p class="clock__hours"></p>
+                        <p class="clock__separator">:</p>
+                        <p class="clock__minutes"></p>
+                    </div>
+                </div>
             </div>
-            <p class="weather__status"></p>
-            <p class="weather__temperature"></p> 
-            <div class="weather__info">
-                <p class="weather__feelslike"></p>
-                <p class="weather__wind-speed"></p>
+
+            <div class="current-weather-wrap">
+                <div class="current-weather-main">
+                    <p class="current__temperature"></p>                
+                    <img class="current__icon" src="" alt="">
+                    <div class="current__weather-main-info">
+                        <p class="current__status"></p>
+                        <p class="current__feelslike"></p>
+                    </div>
+                </div>
+
+                <div class="current-weather-info">
+                    <div class="current__wind-speed"></div>
+                    <div class="current__humidity"></div>
+                    <div class="current__pressure"></div>
+                </div>
             </div>
         </div>
     </div>

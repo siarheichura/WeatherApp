@@ -1,10 +1,9 @@
+/* Base */
+
 * {
     margin: 0;
     padding: 0;
-}
-
-body {
-    font-family: 'Georama', sans-serif;
+    box-sizing: border-box;
 }
 
 .wrapper {
@@ -16,59 +15,95 @@ body {
     background-size: cover;
 }
 
-.weather {
+.opacity {
+    opacity: 0;
+}
+
+/* Weather card */
+
+.card {
     position: relative;
-    width: 300px;
-    height: 300px;
+    width: 380px;
+    padding: 35px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(211, 182, 182);
-    border-radius: 15px;
+    font-family: 'Georama', sans-serif;
+    background: linear-gradient(90deg, #b9deed, #efefef);
+    border-radius: 10px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-.weather__city-select {
-    width: 90px;
+.card__city-select {
+    width: 100px;
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 15px;
+    right: 15px;
     background: none;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
-.weather__city-wrap {
-    position: relative;
-}
-
-.weather__city {
-    max-width: 180px;
-    text-align: center;
-    font-size: 40px;
-}
-
-.weather__temperature {
-    font-size: 65px;
+.card__city {
+    margin-bottom: 5px;
+    font-size: 2em;
     font-weight: 500;
 }
 
-.weather__info {
+.card__clock {
     display: flex;
-    flex-direction: column;
     align-items: center;
 }
 
-.weather__status {
-    font-size: 14px;
+.clock {
+    margin-left: 5px;
+    display: flex;
+}
+
+.current-weather-wrap {
+    padding-bottom: 15px;
+}
+
+.current-weather-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+.current-weather-info {
+    display: flex;
+    justify-content: space-around;
+}
+
+.current__temperature {
+    font-size: 3.5em;
     font-weight: 500;
 }
 
-.weather__icon {
+.current__wind-speed,
+.current__humidity,
+.current__pressure {
+    position: relative;
+}
+
+.current__wind-speed::before {
     position: absolute;
-    top: -10px;
-    left: -40px;
-    width: 50px;
-    height: 50px;
-    border-radius: 10px;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    content: url('img/icons/wind.svg');
+}
+
+.current__humidity::before {
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    content: url('img/icons/drop.svg');
+}
+
+.current__pressure::before {
+    position: absolute;
+    left: -25px;
+    width: 20px;
+    height: 20px;
+    content: url('img/icons/temperature.svg');
 }
