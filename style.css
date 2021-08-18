@@ -24,6 +24,7 @@
 .card {
     position: relative;
     width: 380px;
+    height: 420px;
     padding: 35px;
     display: flex;
     flex-direction: column;
@@ -37,7 +38,7 @@
     width: 100px;
     position: absolute;
     top: 15px;
-    right: 15px;
+    right: 35px;
     background: none;
     border-radius: 3px;
 }
@@ -59,7 +60,8 @@
 }
 
 .current-weather-wrap {
-    padding-bottom: 15px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #4ca2c4;
 }
 
 .current-weather-main {
@@ -106,4 +108,30 @@
     width: 20px;
     height: 20px;
     content: url('img/icons/temperature.svg');
+}
+
+.forecast-wrap {
+    padding-top: 25px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.forecast {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.forecast__icon {
+    width: 50px;
+}
+
+.forecast__temperature-day {
+    font-size: 1.3em;
+}
+
+.forecast__temperature-night {
+    font-size: 0.9em;
 }
