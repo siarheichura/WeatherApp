@@ -1,67 +1,78 @@
-// DOM-elements
-const citySelect = document.querySelector('.card__city-select')
+// DOM Elements
+const cityInput = document.querySelector('.city-search__input')
+const buttonSubmit = document.querySelector('.city-search__button')
 const city = document.querySelector('.card__city')
 const temperature = document.querySelector('.current__temperature')
 const icon = document.querySelector('.current__icon')
 const weatherStatus = document.querySelector('.current__status')
 const feelsLike = document.querySelector('.current__feelslike')
 const windSpeed = document.querySelector('.current__wind-speed')
-const humidity = document.querySelector('.current__humidity')
-const pressure = document.querySelector('.current__pressure')
+const humid = document.querySelector('.current__humidity')
+const press = document.querySelector('.current__pressure')
 const forecastList = document.querySelector('.forecast-wrap')
+const preloader = document.querySelector('.preloader')
 
-// required data
-let cities = ['Minsk', 'Brest', 'Hrodna', 'Vitebsk', 'Mogilev', 'Gomel']    // cities where user can find out the weather
-let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']   // weekdays needed for forecast
-let todayIndex = new Date().getDay();
+// WeekDays For Forecast
+let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday'] 
+
+// Не получилось сделать прелоадер через событие 'load' :(
+setTimeout(() => {
+    preloader.style.display = 'none'
+}, 1500)
 
 document.addEventListener("DOMContentLoaded", app)
 function app() {
-    new Clock().start()
-    setCitiesInDrop()
     showWeatherInUserGeo()
-    initDropdownListener()
-}
-
-function setCitiesInDrop() {
-    cities.forEach(city => {
-        let option = new Option(city, city)
-        citySelect.append(option)
-    })
-}
-
-function initDropdownListener() {
-    citySelect.addEventListener('change', event => {
-        showWeatherInChosenCity(event.target.value)
-    })
+    initCitySearchListeners()
 }
 
 function showWeatherInUserGeo() {
-        navigator.geolocation.getCurrentPosition(position => {
-        let latitude = position.coords.latitude.toFixed(4)
-        let longitude = position.coords.longitude.toFixed(4)
-            // print current weather
-            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=b5a03b378e49085452cb14ec5350c1e9`)
-                .then(response => response.json())
-                .then(result => renderWeather(result))
-            // print forecast
-            fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&appid=b5a03b378e49085452cb14ec5350c1e9`)
-                .then(response => response.json())
-                .then(result => renderForecast(result))
+    navigator.geolocation.getCurrentPosition(position => {
+        let { coords: {latitude, longitude} } = position
+        // Current Weather
+        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=b5a03b378e49085452cb14ec5350c1e9`)
+            .then(response => response.json())
+            .then(result => renderWeather(result))
+        // Forecast
+        fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&appid=b5a03b378e49085452cb14ec5350c1e9`)
+            .then(response => response.json())
+            .then(result => renderForecast(result))
+    })
+}
+
+function initCitySearchListeners() {
+    buttonSubmit.addEventListener('click', () => {
+        showWeatherInChosenCity(cityInput.value)
+        cityInput.value = ''
+    })
+    cityInput.addEventListener('keypress', event => {
+        if(event.keyCode === 13) {
+            showWeatherInChosenCity(cityInput.value)
+            cityInput.value = ''
+        }
     })
 }
 
 async function showWeatherInChosenCity(cityName) {
-    // print current weather
-    let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=b5a03b378e49085452cb14ec5350c1e9`)
-    let weatherDB = await response.json()
-    renderWeather(weatherDB)
-    // print forecast
-    const lon = weatherDB.coord.lon
-    const lat = weatherDB.coord.lat
-    let forecastResponse = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&appid=b5a03b378e49085452cb14ec5350c1e9`)
-    let forecastDB = await forecastResponse.json()
-    renderForecast(forecastDB)
+    try {
+        // Current Weather
+        let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=b5a03b378e49085452cb14ec5350c1e9`)
+        let weatherDB = await response.json()
+        renderWeather(weatherDB)
+        // Forecast
+        const lon = weatherDB.coord.lon
+        const lat = weatherDB.coord.lat
+        let forecastResponse = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&appid=b5a03b378e49085452cb14ec5350c1e9`)
+        let forecastDB = await forecastResponse.json()
+        renderForecast(forecastDB)
+    } catch {
+        cityInput.value = 'Incorrect city name!'
+        cityInput.classList.add('wrongCityAnim')        
+        setTimeout(() => {
+            cityInput.classList.remove('wrongCityAnim')
+            cityInput.value = ''
+        }, 1500)
+    }
 }
 
 function getForecastTemplate(day, src, dayTemp, nightTemp) {
@@ -74,60 +85,30 @@ function getForecastTemplate(day, src, dayTemp, nightTemp) {
 }
 
 function renderForecast(DB) {
+    let { daily } = DB
+    let todayIndex = new Date().getDay();
     forecastList.innerHTML = ''
     for(let i = 1; i <= 3; i++) {
         let day = days[todayIndex + i]
-        let icon =  `https://openweathermap.org/img/wn/${DB.daily[i].weather[0].icon}@2x.png`
-        let tempDay = convertCalvinToCelsius(DB.daily[i].temp.day)
-        let tempNight = convertCalvinToCelsius(DB.daily[i].temp.night)
+        let icon =  `https://openweathermap.org/img/wn/${daily[i].weather[0].icon}@2x.png`
+        let tempDay = convertCalvinToCelsius(daily[i].temp.day)
+        let tempNight = convertCalvinToCelsius(daily[i].temp.night)
         forecastList.innerHTML += getForecastTemplate(day, icon, tempDay, tempNight)
     }
 }
 
 function renderWeather(DB) {
-    city.innerText = DB.name
-    temperature.innerText = convertCalvinToCelsius(DB.main.temp)
-    weatherStatus.innerText = DB.weather[0].description
-    feelsLike.innerText = `Feels like: ${convertCalvinToCelsius(DB.main.feels_like)}`
-    icon.src = `https://openweathermap.org/img/wn/${DB.weather[0].icon}@2x.png`
-    windSpeed.innerText = `${DB.wind.speed} m/s`
-    humidity.innerText = `${DB.main.humidity} %`
-    pressure.innerText = `${DB.main.pressure} hPa`
+    let { name, main: {temp, feels_like, humidity, pressure}, weather: [weather], wind: {speed} } = DB
+    city.innerText = name
+    temperature.innerText = convertCalvinToCelsius(temp)
+    weatherStatus.innerText = weather.description
+    feelsLike.innerText = `Feels like: ${convertCalvinToCelsius(feels_like)}`
+    icon.src = `https://openweathermap.org/img/wn/${weather.icon}@2x.png`
+    windSpeed.innerText = `${speed} m/s`
+    humid.innerText = `${humidity} %`
+    press.innerText = `${pressure} hPa`
 }
 
 function convertCalvinToCelsius(temp) {
     return `${Math.round(temp - 273.15)}°`
-}
-
-
-// Clock
-
-class Clock {
-    #getDate() {
-        const time = new Date()
-        const date = {
-            hours: time.getHours(),
-            minutes: time.getMinutes(),
-        }
-        return date
-    }
-
-    #update() {
-        let hours = document.querySelector('.clock__hours')
-        let minutes = document.querySelector('.clock__minutes')
-        let date = this.#getDate()
-
-        hours.innerText = date.hours.toString().padStart(2, '0')
-        minutes.innerText = date.minutes.toString().padStart(2, '0')
-    }
-
-    start() {
-        this.#update()
-        let separator = document.querySelector('.clock__separator')
-
-        setInterval(() => {
-            this.#update()
-            separator.classList.toggle('opacity')
-        }, 1000);
-    }    
 }

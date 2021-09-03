@@ -15,48 +15,62 @@
     background-size: cover;
 }
 
-.opacity {
-    opacity: 0;
-}
-
 /* Weather card */
 
 .card {
     position: relative;
-    width: 380px;
-    height: 420px;
-    padding: 35px;
+    width: 400px;
+    height: 440px;
+    padding: 35px 45px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     font-family: 'Georama', sans-serif;
-    background: linear-gradient(90deg, #b9deed, #efefef);
+    background: linear-gradient(90deg, #b3ddee, #ebcccc);
     border-radius: 10px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-.card__city-select {
-    width: 100px;
-    position: absolute;
-    top: 15px;
-    right: 35px;
+.city-search {
+    width: 100%;
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.wrongCityAnim {
+    color: #ff0000;
+    font-weight: 600;
+    animation: wrongCityAnim 0.4s linear;
+}
+
+.city-search__input {
+    margin-right: 5px;
+    padding: 5px;
+    outline: none;
+    border: none;
     background: none;
+    border-bottom: 1px solid #4ca2c4;
+}
+
+.city-search__button {
+    width: 50px;
+    padding: 5px;
+    font-weight: 700;
+    outline: none;
+    border: none;
     border-radius: 3px;
+    background: #d6cf6e;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.city-search__button:hover {
+    background: #d0c537;
 }
 
 .card__city {
-    margin-bottom: 5px;
     font-size: 2em;
     font-weight: 500;
-}
-
-.card__clock {
-    display: flex;
-    align-items: center;
-}
-
-.clock {
-    margin-left: 5px;
-    display: flex;
 }
 
 .current-weather-wrap {
@@ -134,4 +148,36 @@
 
 .forecast__temperature-night {
     font-size: 0.9em;
+}
+
+.preloader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(90deg, #b3ddee, #ebcccc);
+    border-radius: 10px;
+}
+
+.preloader__img {
+    height: 50px;
+    width: 50px;
+    animation: sunAnim 2s linear infinite;
+}
+
+@keyframes sunAnim {
+    from {transform: rotate(0);}
+    to {transform: rotate(360deg);}
+}
+
+@keyframes wrongCityAnim {
+    from {transform: translateY(0);}
+    25% {transform: translateY(2px);}
+    50% {transform: translateY(-2px);}
+    75% {transform: translateY(2px);}
+    to {transform: translateY(0);}
 }

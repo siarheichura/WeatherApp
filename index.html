@@ -9,26 +9,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Georama:wght@400;500&display=swap" rel="stylesheet">
     <script src="./index.js" type="module" defer></script>
     <link rel="stylesheet" href="style.css">
-    <title>Belarus Current weather</title>
+    <title>WeatherApp</title>
 </head>
 <body>
     <div class="wrapper">
         <div class="card">
-            <select class="card__city-select">
-                <option value="Select city" disabled selected>Select city</option>
-            </select>
 
-            <div class="card__heading">
-                <div class="card__city"></div>
-                <div class="card__clock">
-                    <div class="clock-text">Current time</div>
-                    <div class="clock">
-                        <p class="clock__hours"></p>
-                        <p class="clock__separator">:</p>
-                        <p class="clock__minutes"></p>
-                    </div>
-                </div>
+            <div class="city-search">
+                <input class="city-search__input" type="search" placeholder="Enter city">
+                <button class="city-search__button">Go!</button>
             </div>
+
+            <div class="card__city"></div>
 
             <div class="current-weather-wrap">
                 <div class="current-weather-main">
@@ -48,6 +40,10 @@
             </div>
 
             <div class="forecast-wrap"></div>
+
+            <div class="preloader">
+                <img class="preloader__img" src="img/icons/sunny.png" alt="">
+            </div>
         </div>
     </div>
 </body>
