@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Georama:wght@400;500&display=swap" rel="stylesheet">
     <script src="./index.js" type="module" defer></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
     <link rel="stylesheet" href="style.css">
     <title>WeatherApp</title>
 </head>
@@ -41,9 +43,12 @@
 
             <div class="forecast-wrap"></div>
 
-            <div class="preloader">
-                <img class="preloader__img" src="img/icons/sunny.png" alt="">
-            </div>
+        </div>
+
+        <div class="map"></div>
+
+        <div class="preloader">
+            <img class="preloader__img" src="img/icons/sunny.png" alt="">
         </div>
     </div>
 </body>

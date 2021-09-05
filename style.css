@@ -27,7 +27,7 @@
     justify-content: space-between;
     font-family: 'Georama', sans-serif;
     background: linear-gradient(90deg, #b3ddee, #ebcccc);
-    border-radius: 10px;
+    border-radius: 10px 0 0 10px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
@@ -150,12 +150,20 @@
     font-size: 0.9em;
 }
 
+.map {
+    height: 440px;
+    width: 400px;
+    background: #ff0000;
+    border-radius: 0 10px 10px 0;
+}
+
 .preloader {
+    z-index: 3;
     position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
+    top: calc(50% - 220px);
+    left: calc(50% - 400px);
+    height: 440px;
+    width: 800px;
     display: flex;
     align-items: center;
     justify-content: center;

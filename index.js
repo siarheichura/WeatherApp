@@ -11,6 +11,7 @@ const humid = document.querySelector('.current__humidity')
 const press = document.querySelector('.current__pressure')
 const forecastList = document.querySelector('.forecast-wrap')
 const preloader = document.querySelector('.preloader')
+const mapWrap = document.querySelector('.map')
 
 // WeekDays For Forecast
 let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday'] 
@@ -29,6 +30,8 @@ function app() {
 function showWeatherInUserGeo() {
     navigator.geolocation.getCurrentPosition(position => {
         let { coords: {latitude, longitude} } = position
+        // Map
+        printMap(longitude, latitude)
         // Current Weather
         fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=b5a03b378e49085452cb14ec5350c1e9`)
             .then(response => response.json())
@@ -65,6 +68,7 @@ async function showWeatherInChosenCity(cityName) {
         let forecastResponse = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&appid=b5a03b378e49085452cb14ec5350c1e9`)
         let forecastDB = await forecastResponse.json()
         renderForecast(forecastDB)
+        printMap(lon, lat)
     } catch {
         cityInput.value = 'Incorrect city name!'
         cityInput.classList.add('wrongCityAnim')        
@@ -111,4 +115,15 @@ function renderWeather(DB) {
 
 function convertCalvinToCelsius(temp) {
     return `${Math.round(temp - 273.15)}°`
+}
+
+function printMap(longitude, latitude) {
+    console.log(mapboxgl)
+    mapboxgl.accessToken = 'pk.eyJ1Ijoic2VyeXZvbGsiLCJhIjoiY2t0N2NhazYzMHFyeTJucnc0ZDBnaTMwMyJ9.-kPnDph_kaWZHDKIC6JKyg';
+    let map = new mapboxgl.Map({
+        container: mapWrap,
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [longitude, latitude], // [longitude, latitude]
+        zoom: 10
+    });
 }
