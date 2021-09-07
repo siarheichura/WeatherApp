@@ -16,11 +16,6 @@ const mapWrap = document.querySelector('.map')
 // WeekDays For Forecast
 let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday'] 
 
-// Не получилось сделать прелоадер через событие 'load' :(
-setTimeout(() => {
-    preloader.style.display = 'none'
-}, 1500)
-
 document.addEventListener("DOMContentLoaded", app)
 function app() {
     showWeatherInUserGeo()
@@ -111,6 +106,7 @@ function renderWeather(DB) {
     windSpeed.innerText = `${speed} m/s`
     humid.innerText = `${humidity} %`
     press.innerText = `${pressure} hPa`
+    closePreloader()
 }
 
 function convertCalvinToCelsius(temp) {
@@ -118,12 +114,18 @@ function convertCalvinToCelsius(temp) {
 }
 
 function printMap(longitude, latitude) {
-    console.log(mapboxgl)
     mapboxgl.accessToken = 'pk.eyJ1Ijoic2VyeXZvbGsiLCJhIjoiY2t0N2NhazYzMHFyeTJucnc0ZDBnaTMwMyJ9.-kPnDph_kaWZHDKIC6JKyg';
     let map = new mapboxgl.Map({
         container: mapWrap,
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [longitude, latitude], // [longitude, latitude]
-        zoom: 10
+        zoom: 12
     });
+    const marker = new mapboxgl.Marker()
+        .setLngLat([longitude, latitude])
+        .addTo(map);
+}
+
+function closePreloader() {
+    preloader.style.display = 'none'
 }
